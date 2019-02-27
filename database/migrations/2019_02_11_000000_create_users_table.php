@@ -29,14 +29,16 @@ class CreateUsersTable extends Migration
             $table->string('parent_name')->nullable();
             $table->string('image')->nullable();
             $table->date('birthday')->nullable();
+            $table->string('phone_number')->nullable();
 
             $table->string('device_token')->nullable();
 
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
 
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
-            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

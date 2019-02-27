@@ -13,8 +13,8 @@ class Group extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function courses()
+    public function lessons()
     {
-        return $this->hasMany(Course::class);
+        return $this->hasMany(Lesson::class);
     }
 }

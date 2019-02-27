@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\CreateUserRequest;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
@@ -15,9 +16,11 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::where('role_id', $request->role)->get();
+        $role_id = ($request->role == null) ? 3 : $request->role;
 
-        $role = Role::find($request->role);
+        $users = User::where('role_id', $role_id)->get();
+
+        $role = Role::find($role_id);
 
         if ($request->view == 2)
             return view('admin.users.index2', compact('users'));
@@ -35,15 +38,13 @@ class UsersController extends Controller
         return view('admin.users.create');
     }
 
+
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param CreateUserRequest $request
      */
-    public function store(Request $request)
+    public function store(CreateUserRequest $request)
     {
-        //
+        dd($request->all());
     }
 
     /**
