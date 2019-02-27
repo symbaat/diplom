@@ -28,10 +28,10 @@
 
                 </div>
                 <div class="col-sm-8 col-9 text-right m-b-20">
-                    <a href="{{ route('admin.users.create') }}" class="btn btn-primary float-right btn-rounded"><i class="fa fa-plus">Добавить пользователя</i></a>
+                    <a href="{{ route('admin.users.create', ['role' => $role->id]) }}" class="btn btn-primary float-right btn-rounded"><i class="fa fa-plus">Добавить пользователя</i></a>
                     <div class="view-icons">
-                        <a href="{{ route('admin.users.index', ['view' => '2']) }}" class="grid-view btn btn-link"><i class="fa fa-th"></i></a>
-                        <a href="{{ route('admin.users.index', ['view' => '1']) }}" class="list-view btn btn-link active"><i class="fa fa-bars"></i></a>
+                        <a href="{{ route('admin.users.index', ['view' => 2, 'role' => $role->id]) }}" class="grid-view btn btn-link"><i class="fa fa-th"></i></a>
+                        <a href="{{ route('admin.users.index', ['view' => 1, 'role' => $role->id]) }}" class="list-view btn btn-link active"><i class="fa fa-bars"></i></a>
                     </div>
                 </div>
             </div>
@@ -80,7 +80,7 @@
                                     <th style="width:20%;">Name </th>
                                     <th>Gender</th>
                                     <th>Parents Name</th>
-                                    <th>Group</th>
+                                    {{--<th>Group</th>--}}
                                     <th>Address</th>
                                     <th>Date of Birth</th>
                                     <th>Email</th>
@@ -93,13 +93,13 @@
                                         <tr>
                                             <td>
                                                 <a href="profile.html" class="avatar">
-                                                    {{ $user->getImage() }}
+                                                    {!! $user->getImage() !!}
                                                 </a>
                                                 <h2><a href="profile.html">{{ $user->name }}<span></span></a></h2>
                                             </td>
                                             <td>{{ $user->getGender() }}</td>
                                             <td>{{ $user->parent_name }}</td>
-                                            <td>{{ $user->group->name }}</td>
+{{--                                            <td>{{ $user->group->name }}</td>--}}
                                             <td>{{ $user->address }}</td>
                                             <td>{{ $user->birthday }}</td>
                                             <td>{{ $user->email }}</td>

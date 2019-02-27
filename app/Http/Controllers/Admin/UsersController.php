@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\CreateUserRequest;
 use App\Role;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -33,9 +34,12 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('admin.users.create');
+        $role_id = ($request->role == null) ? 3 : $request->role;
+        $role = Role::find($role_id);
+
+        return view('admin.users.create', compact('role'));
     }
 
 
@@ -44,7 +48,33 @@ class UsersController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
-        dd($request->all());
+        $img = null;
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+
+            $img = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/img');
+            $image->move($destinationPath, $img);
+        }
+
+        $user = User::create([
+            'role_id'       => $request->role_id,
+            'name'          => $request->name,
+            'surname'       => $request->surname,
+            'lastname'      => $request->lastname,
+            'birthday'      => Carbon::createFromFormat('d/m/Y', $request->birthday),
+            'parent_name'   => $request->parent_name,
+            'gender'        => $request->gender,
+            'phone_number'  => $request->phone_number,
+            'address'       => $request->address,
+            'email'         => $request->email,
+            'password'      => bcrypt($request->password),
+            'image'         => $img
+        ]);
+
+        dd($user);
+        return redirect()->route('admin.users.index', ['role' => $request->role_id]);
     }
 
     /**

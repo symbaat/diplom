@@ -26,14 +26,15 @@ class CreateUserRequest extends FormRequest
         return [
             'name'          => 'required|string',
             'surname'       => 'required|string',
-            'lastname'      => 'filled|string',
-            'birthday'      => 'filled|date',
+            'lastname'      => 'nullable|string',
+            'birthday'      => 'nullable|date_format:d/m/Y',
             'parent_name'   => 'filled|string',
             'gender'        => 'required|boolean',
             'phone_number'  => 'filled|string|size:17',
             'address'       => 'filled|string',
             'email'         => 'required|string|email|unique:users',
-            'password'      => 'required|string|min:6|confirmed'
+            'password'      => 'required|string|min:6|confirmed',
+            'image'         => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ];
     }
 }

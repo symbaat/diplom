@@ -17,7 +17,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'role_id', 'group_id', 'email', 'password',
-        'surname', 'name', 'lastname', 'gender', 'address', 'phone_number',
+        'surname', 'name', 'lastname', 'gender', 'address', 'phone_number', 'image',
         'parent_name', 'device_token', 'birthday',
     ];
 
@@ -70,7 +70,7 @@ class User extends Authenticatable
         if ($this->image == null || $this->image == '')
             return $this->name[0];
 
-        return asset('storage/img/'. $this->image);
+        return '<img src="'. asset('img/'. $this->image) .'">';
     }
 
     public function getGender()

@@ -22,10 +22,10 @@
                 <div class="col-sm-4 col-3">
                 </div>
                 <div class="col-sm-8 col-9 text-right m-b-20">
-                    <a href="{{ route('admin.users.create') }}" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Student</a>
+                    <a href="{{ route('admin.users.create', ['role' => $role->id]) }}" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Student</a>
                     <div class="view-icons">
-                        <a href="{{ route('admin.users.index', ['view' => '2']) }}" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
-                        <a href="{{ route('admin.users.index', ['view' => '1']) }}" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
+                        <a href="{{ route('admin.users.index', ['view' => 2, 'role' => $role->id]) }}" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+                        <a href="{{ route('admin.users.index', ['view' => 1, 'role' => $role->id]) }}) }}" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
                     </div>
                 </div>
             </div>
@@ -98,7 +98,7 @@
                                     </div>
                                 </div>
                                 <h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="student-profile.html">{{ $user->name }}</a></h4>
-                                <div class="small text-muted">{{ $user->group->name }}</div>
+                                <div class="small text-muted">Group name{{--{{ $user->group->name }}--}}</div>
                             </div>
                         </div>
                     @endforeach

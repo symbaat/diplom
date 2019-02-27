@@ -21,9 +21,26 @@
             <div class="page-content">
                 <div class="row">
                     <div class="col-md-12">
-                        <form action="{{ route('admin.users.store') }}" method="POST">
+                        <form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data">
                             {{ csrf_field() }}
+
                             <div class="card-box">
+                                <div class="row">
+                                    <div class="col-md-6 offset-md-5">
+                                        <h4 class="card-title">Фотография акаунта</h4><br>
+                                        <div class="form-group row">
+                                            <img src="{{ asset('img/user.jpg') }}" class="avatar-big" id="myimage">
+                                            <div class="col-lg-9">
+                                                <input type="file" onchange="onFileSelected(event)" name="image">
+                                                @if ($errors->has('image'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('image') }}</strong>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <h4 class="card-title">Персональные данные</h4><br>
@@ -31,6 +48,11 @@
                                             <label class="col-lg-3 col-form-label">Имя:</label>
                                             <div class="col-lg-9">
                                                 <input type="text" class="form-control" name="name" required>
+                                                @if ($errors->has('name'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('name') }}</strong>
+                                                    </span>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -39,9 +61,19 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <input type="text" placeholder="Фамилия" class="form-control" name="surname" required>
+                                                        @if ($errors->has('surname'))
+                                                            <span class="help-block">
+                                                                <strong>{{ $errors->first('surname') }}</strong>
+                                                            </span>
+                                                        @endif
                                                     </div>
                                                     <div class="col-md-6">
                                                         <input type="text" placeholder="Отчества" class="form-control" name="lastname">
+                                                        @if ($errors->has('lastname'))
+                                                            <span class="help-block">
+                                                                <strong>{{ $errors->first('lastname') }}</strong>
+                                                            </span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -50,12 +82,22 @@
                                             <label class="col-lg-3 col-form-label">День рождения:</label>
                                             <div class="col-lg-9">
                                                 <input type="text" class="datetimepicker form-control" class="form-control" name="birthday">
+                                                @if ($errors->has('birthday'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('birthday') }}</strong>
+                                                    </span>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-3 col-form-label">Имя родителя:</label>
                                             <div class="col-lg-9">
                                                 <input type="text" class="form-control" name="parent_name">
+                                                @if ($errors->has('parent_name'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('parent_name') }}</strong>
+                                                    </span>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -73,18 +115,33 @@
                                                         Девушка
                                                     </label>
                                                 </div>
+                                                @if ($errors->has('gender'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('gender') }}</strong>
+                                                    </span>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-3 col-form-label">Телефонный номер:</label>
                                             <div class="col-lg-9">
                                                 <input type="text" class="form-control" name="phone_number">
+                                                @if ($errors->has('phone_number'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('phone_number') }}</strong>
+                                                    </span>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-3 col-form-label">Адрес:</label>
                                             <div class="col-lg-9">
                                                 <input type="text" class="form-control m-b-20" name="address" required>
+                                                @if ($errors->has('address'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('address') }}</strong>
+                                                    </span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -94,12 +151,22 @@
                                             <label class="col-lg-3 col-form-label">Email:</label>
                                             <div class="col-lg-9">
                                                 <input type="email" class="form-control" name="email" required>
+                                                @if ($errors->has('email'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('email') }}</strong>
+                                                    </span>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-3 col-form-label">Пароль:</label>
                                             <div class="col-lg-9">
                                                 <input type="password" class="form-control" name="password" required>
+                                                @if ($errors->has('password'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('password') }}</strong>
+                                                    </span>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -109,6 +176,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <input type="hidden" name="role_id" value="{{ $role->id }}">
                                 </div>
                                 <div class="text-right">
                                     <button type="submit" class="btn btn-primary">Отправить</button>
