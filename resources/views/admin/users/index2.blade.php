@@ -70,25 +70,27 @@
                         <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
                             <div class="profile-widget">
                                 <div class="profile-img">
-                                    <a href="student-profile.html"><img class="avatar" src="{{ $user->getImage() }}" alt=""></a>
+                                    <a href="student-profile.html" class="avatar">
+                                        {!! ($user->image == null) ? $user->name[0] : '<img src="'. asset('img/'. $user->image) .'">' !!}
+                                    </a>
                                 </div>
                                 <div class="dropdown profile-action">
                                     <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="{{ route('admin.users.edit', $user->id) }}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                        <a class="dropdown-item" href="{{ route('admin.users.edit', $user->id) }}"><i class="fa fa-pencil m-r-5"></i> Редактировать</a>
+                                        <a class="dropdown-item" href="{{ route('admin.users.destroy', $user->id) }}" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Удалить</a>
                                     </div>
                                     <div id="delete_employee" class="modal" role="dialog">
                                         <div class="modal-dialog">
                                             <div class="modal-content modal-md">
                                                 <div class="modal-header">
-                                                    <h4 class="modal-title">Delete Employee</h4>
+                                                    <h4 class="modal-title">Удалить пользователя</h4>
                                                 </div>
                                                 <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST">
-                                                    @method('DELETE')
+                                                    {{ method_field('DELETE') }}
                                                     <div class="modal-body card-box">
-                                                        <p>Are you sure want to delete this?</p>
-                                                        <div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+                                                        <p>Вы точно хотите удалить {{ $user->name  }}</p>
+                                                        <div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">Закрыть</a>
                                                             <button type="submit" class="btn btn-danger">Delete</button>
                                                         </div>
                                                     </div>

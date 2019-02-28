@@ -93,7 +93,7 @@
                                         <tr>
                                             <td>
                                                 <a href="profile.html" class="avatar">
-                                                    {!! $user->getImage() !!}
+                                                    {!! ($user->image == null) ? $user->name[0] : '<img src="'. asset('img/'. $user->image) .'">' !!}
                                                 </a>
                                                 <h2><a href="profile.html">{{ $user->name }}<span></span></a></h2>
                                             </td>
@@ -101,7 +101,7 @@
                                             <td>{{ $user->parent_name }}</td>
 {{--                                            <td>{{ $user->group->name }}</td>--}}
                                             <td>{{ $user->address }}</td>
-                                            <td>{{ $user->birthday }}</td>
+                                            <td>{{ (\Carbon\Carbon::createFromFormat('Y-m-d', $user->birthday))->format('d/m/Y') }}</td>
                                             <td>{{ $user->email }}</td>
                                             <td>{{ $user->mobile }}</td>
                                             <td class="text-right">
@@ -116,14 +116,14 @@
                                                 <div class="modal-dialog">
                                                     <div class="modal-content modal-md">
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title">Delete student</h4>
+                                                            <h4 class="modal-title">Удалить пользователя</h4>
                                                         </div>
                                                         <form action="{{ route('admin.users.destroy', $user->id) }}" method="post">
-                                                            @method('DELETE')
+                                                            {{ method_field('DELETE') }}
                                                             <div class="modal-body card-box">
-                                                                <p>Are you sure want to delete this?</p>
-                                                                <div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
-                                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                                <p>Вы точно хотите удалить {{ $user->name  }}</p>
+                                                                <div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">Закрыть</a>
+                                                                    <button type="submit" class="btn btn-danger">Удалить</button>
                                                                 </div>
                                                             </div>
                                                         </form>

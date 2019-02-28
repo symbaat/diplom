@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Role;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 
 class UsersController extends Controller
 {
@@ -24,7 +26,7 @@ class UsersController extends Controller
         $role = Role::find($role_id);
 
         if ($request->view == 2)
-            return view('admin.users.index2', compact('users'));
+            return view('admin.users.index2', compact('users', 'role'));
 
         return view('admin.users.index', compact('users', 'role'));
     }
@@ -42,9 +44,9 @@ class UsersController extends Controller
         return view('admin.users.create', compact('role'));
     }
 
-
     /**
      * @param CreateUserRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(CreateUserRequest $request)
     {
@@ -73,7 +75,6 @@ class UsersController extends Controller
             'image'         => $img
         ]);
 
-        dd($user);
         return redirect()->route('admin.users.index', ['role' => $request->role_id]);
     }
 
@@ -85,40 +86,61 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(Request $request, User $user)
     {
-        //
+        $role_id = ($request->role == null) ? 3 : $request->role;
+        $role = Role::find($role_id);
+
+        return view('admin.users.edit', compact('role', 'user'));
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateUserRequest $request
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $user->update($request->only([
+            'name', 'surname', 'lastname', 'parent_name', 'gender', 'address', 'email'
+        ]));
+
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+
+            $img = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/img');
+            $image->move($destinationPath, $img);
+            if (File::exists('img/' . $user->image)) {
+                unlink(public_path('img/' . $user->image));
+                File::delete('img/' . $user->image);
+            }
+            $user->image = $img;
+        }
+
+        $user->birthday = Carbon::createFromFormat('d/m/Y', $request->birthday);
+        $user->save();
+
+        return redirect()->route('admin.users.index', ['role' => $user->role_id]);
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->route('admin.users.index', ['role' => $user->role_id]);
     }
 }

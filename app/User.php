@@ -65,14 +65,6 @@ class User extends Authenticatable
         return $this->hasMany(Salary::class);
     }
 
-    public function getImage()
-    {
-        if ($this->image == null || $this->image == '')
-            return $this->name[0];
-
-        return '<img src="'. asset('img/'. $this->image) .'">';
-    }
-
     public function getGender()
     {
         return ($this->gender) ? "Male" : "Female";
