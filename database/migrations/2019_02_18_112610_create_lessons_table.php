@@ -18,9 +18,11 @@ class CreateLessonsTable extends Migration
             $table->unsignedInteger('group_id');
             $table->dateTime('time');
             $table->unsignedInteger('room');
+            $table->unsignedInteger('teacher_id');
             $table->timestamps();
 
-            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('teacher_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

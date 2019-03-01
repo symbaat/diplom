@@ -24,12 +24,12 @@ class CreateUsersTable extends Migration
             $table->string('lastname')->nullable();
             $table->boolean('gender');                  // 1 => male, 2 => female
             $table->string('address');
-
-            $table->unsignedInteger('group_id')->nullable();
-            $table->string('parent_name')->nullable();
             $table->string('image')->nullable();
             $table->date('birthday')->nullable();
             $table->string('phone_number')->nullable();
+
+            $table->unsignedInteger('group_id')->nullable();
+            $table->string('parent_name')->nullable();
 
             $table->string('device_token')->nullable();
 
