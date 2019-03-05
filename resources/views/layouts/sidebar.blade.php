@@ -14,22 +14,11 @@
                         <li><a href="{{ route('admin.users.index', ['role' => '3']) }}">Ученики</a></li>
                     </ul>
                 </li>
-                <li class="submenu">
-                    <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Students</span> <span class="menu-arrow"></span></a>
-                    <ul class="list-unstyled" style="display: none;">
-                        <li><a href="{{ route('admin.users.index') }}">All Students</a></li>
-                        <li><a href="{{ route('admin.users.create') }}">Add Student</a></li>
-                        <li><a href="about-student.html">About Student</a></li>
-                    </ul>
+                <li>
+                    <a href="{{ route('admin.groups.index') }}" style="width: 80%; display: inline-block;"><i class="fa fa-calendar" aria-hidden="true"></i> Группа</a>
                 </li>
-                <li class="submenu">
-                    <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Parents</span> <span class="menu-arrow"></span></a>
-                    <ul class="list-unstyled" style="display: none;">
-                        <li><a href="all-parents.html">All Parents</a></li>
-                        <li><a href="add-parent.html">Add Parent</a></li>
-                        <li><a href="edit-parent.html">Edit Parent</a></li>
-                        <li><a href="about-parent.html">About Parent</a></li>
-                    </ul>
+                <li>
+                    <a href="calendar.html" style="width: 80%; display: inline-block;"><i class="fa fa-calendar" aria-hidden="true"></i> Calendar</a>
                 </li>
                 <li class="submenu">
                     <a href="javascript:void(0);"><i class="fa fa-share-alt" aria-hidden="true"></i> <span>Apps</span> <span class="menu-arrow"></span></a>
@@ -63,41 +52,8 @@
                 <li>
                     <a href="calendar.html" style="width: 80%; display: inline-block;"><i class="fa fa-calendar" aria-hidden="true"></i> Calendar</a>
                 </li>
-                <li>
-                    <a href="exam-list.html"><i class="fa fa-table" aria-hidden="true"></i> Exam list</a>
-                </li>
-                <li>
-                    <a href="holidays.html"><i class="fa fa-tasks" aria-hidden="true"></i> Holidays</a>
-                </li>
-                <li>
-                    <a href="calendar.html"><i class="fa fa-table" aria-hidden="true"></i> Events</a>
-                </li>
-                <li class="submenu">
-                    <a href="#"><i class="fa fa-book" aria-hidden="true"></i><span> Accounts </span> <span class="menu-arrow"></span></a>
-                    <ul class="list-unstyled" style="display: none;">
-                        <li><a href="invoices.html">Invoices</a></li>
-                        <li><a href="payments.html">Payments</a></li>
-                        <li><a href="expenses.html">Expenses</a></li>
-                        <li><a href="provident-fund.html">Provident Fund</a></li>
-                        <li><a href="taxes.html">Taxes</a></li>
-                    </ul>
-                </li>
-                <li class="submenu">
-                    <a href="#"><i class="fa fa-money" aria-hidden="true"></i><span> Payroll </span> <span class="menu-arrow"></span></a>
-                    <ul class="list-unstyled" style="display: none;">
-                        <li><a href="salary.html"> Employee Salary </a></li>
-                        <li><a href="salary-view.html"> Payslip </a></li>
-                    </ul>
-                </li>
-                <li class="submenu">
-                    <a href="#"><i class="fa fa-commenting-o" aria-hidden="true"></i> <span> Blog</span> <span class="menu-arrow"></span></a>
-                    <ul class="list-unstyled" style="display: none;">
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="blog-details.html">Blog View</a></li>
-                        <li><a href="add-blog.html">Add Blog</a></li>
-                        <li><a href="edit-blog.html">Edit Blog</a></li>
-                    </ul>
-                </li>
+
+
                 <li class="submenu">
                     <a href="javascript:void(0);" class="noti-dot"><i class="fa fa-rocket" aria-hidden="true"></i> <span>Management </span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">

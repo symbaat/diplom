@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Group;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Role;
@@ -41,7 +42,9 @@ class UsersController extends Controller
         $role_id = ($request->role == null) ? 3 : $request->role;
         $role = Role::find($role_id);
 
-        return view('admin.users.create', compact('role'));
+        $groups = Group::all();
+
+        return view('admin.users.create', compact('role', 'groups'));
     }
 
     /**
@@ -99,7 +102,9 @@ class UsersController extends Controller
         $role_id = ($request->role == null) ? 3 : $request->role;
         $role = Role::find($role_id);
 
-        return view('admin.users.edit', compact('role', 'user'));
+        $groups = Group::all();
+
+        return view('admin.users.edit', compact('role', 'user', 'groups'));
     }
 
     /**

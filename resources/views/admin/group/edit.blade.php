@@ -7,13 +7,13 @@
             <div class="page-header">
                 <div class="row">
                     <div class="col-lg-7 col-md-12 col-sm-12 col-12">
-                        <h5 class="text-uppercase">Добавить ученика</h5>
+                        <h5 class="text-uppercase">Редактировать ученика</h5>
                     </div>
                     <div class="col-lg-5 col-md-12 col-sm-12 col-12">
                         <ul class="list-inline breadcrumb float-right">
-                            <li class="list-inline-item"><a href="/">Главная</a></li>
+                            <li class="list-inline-item"><a href="/">Home</a></li>
                             <li class="list-inline-item"><a href="{{ route('admin.users.index', ['role' => 3]) }}">Ученики</a></li>
-                            <li class="list-inline-item">Добавить пользователя</li>
+                            <li class="list-inline-item">Редактировать ученика</li>
                         </ul>
                     </div>
                 </div>
@@ -21,15 +21,16 @@
             <div class="page-content">
                 <div class="row">
                     <div class="col-md-12">
-                        <form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('admin.users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
                             {{ csrf_field() }}
-
+                            {{ method_field('PUT') }}
                             <div class="card-box">
                                 <div class="row">
                                     <div class="col-md-6 offset-md-5">
                                         <h4 class="card-title">Фотография акаунта</h4><br>
                                         <div class="form-group row">
-                                            <img src="{{ asset('img/user.jpg') }}" class="avatar-big" id="myimage">
+                                            <img src="{{ ($user->image == null) ? asset('img/user.jpg') : asset('img/'. $user->image) }}"
+                                                 class="avatar-big" id="myimage">
                                             <div class="col-lg-9">
                                                 <input type="file" onchange="onFileSelected(event)" name="image">
                                                 @if ($errors->has('image'))
@@ -47,7 +48,7 @@
                                         <div class="form-group row">
                                             <label class="col-lg-3 col-form-label">Имя:</label>
                                             <div class="col-lg-9">
-                                                <input type="text" class="form-control" name="name" required>
+                                                <input type="text" class="form-control" name="name" value="{{ $user->name }}" required>
                                                 @if ($errors->has('name'))
                                                     <span class="help-block">
                                                         <strong>{{ $errors->first('name') }}</strong>
@@ -60,7 +61,7 @@
                                             <div class="col-lg-9">
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <input type="text" placeholder="Фамилия" class="form-control" name="surname" required>
+                                                        <input type="text" value="{{ $user->surname }}" class="form-control" name="surname" required>
                                                         @if ($errors->has('surname'))
                                                             <span class="help-block">
                                                                 <strong>{{ $errors->first('surname') }}</strong>
@@ -68,7 +69,7 @@
                                                         @endif
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <input type="text" placeholder="Отчества" class="form-control" name="lastname">
+                                                        <input type="text" value="{{ $user->lastname }}" class="form-control" name="lastname">
                                                         @if ($errors->has('lastname'))
                                                             <span class="help-block">
                                                                 <strong>{{ $errors->first('lastname') }}</strong>
@@ -81,7 +82,8 @@
                                         <div class="form-group row">
                                             <label class="col-lg-3 col-form-label">День рождения:</label>
                                             <div class="col-lg-9">
-                                                <input type="text" class="datetimepicker form-control" class="form-control" name="birthday">
+                                                <input type="text" value="{{ (\Carbon\Carbon::createFromFormat('Y-m-d', $user->birthday))->format('d/m/Y') }}"
+                                                       class="datetimepicker form-control" name="birthday">
                                                 @if ($errors->has('birthday'))
                                                     <span class="help-block">
                                                         <strong>{{ $errors->first('birthday') }}</strong>
@@ -89,30 +91,30 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        @if ($role->id == 3)
-                                            <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">Имя родителя:</label>
-                                                <div class="col-lg-9">
-                                                    <input type="text" class="form-control" name="parent_name">
-                                                    @if ($errors->has('parent_name'))
-                                                        <span class="help-block">
-                                                            <strong>{{ $errors->first('parent_name') }}</strong>
-                                                        </span>
-                                                    @endif
-                                                </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-3 col-form-label">Имя родителя:</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" name="parent_name" value="{{ $user->parent_name }}">
+                                                @if ($errors->has('parent_name'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('parent_name') }}</strong>
+                                                    </span>
+                                                @endif
                                             </div>
-                                        @endif
+                                        </div>
                                         <div class="form-group row">
                                             <label class="col-md-3 col-form-label">Пол</label>
                                             <div class="col-md-9">
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="gender" value="1" checked>
+                                                    <input class="form-check-input" type="radio" name="gender" value="1"
+                                                            {{ ($user->gender) ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="gender">
                                                         Парень
                                                     </label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="gender" value="0">
+                                                    <input class="form-check-input" type="radio" name="gender" value="0"
+                                                    {{ ($user->gender) ? '' : 'checked' }}>
                                                     <label class="form-check-label" for="gender">
                                                         Девушка
                                                     </label>
@@ -127,7 +129,7 @@
                                         <div class="form-group row">
                                             <label class="col-lg-3 col-form-label">Телефонный номер:</label>
                                             <div class="col-lg-9">
-                                                <input type="text" class="form-control" name="phone_number">
+                                                <input type="text" class="form-control" name="phone_number" value="{{ $user->phone_number }}">
                                                 @if ($errors->has('phone_number'))
                                                     <span class="help-block">
                                                         <strong>{{ $errors->first('phone_number') }}</strong>
@@ -138,7 +140,7 @@
                                         <div class="form-group row">
                                             <label class="col-lg-3 col-form-label">Адрес:</label>
                                             <div class="col-lg-9">
-                                                <input type="text" class="form-control m-b-20" name="address" required>
+                                                <input type="text" class="form-control m-b-20" name="address" value="{{ $user->address }}" required>
                                                 @if ($errors->has('address'))
                                                     <span class="help-block">
                                                         <strong>{{ $errors->first('address') }}</strong>
@@ -146,31 +148,13 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        @if ($role->id == 3)
-                                            <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label">Группа:</label>
-                                                <div class="col-lg-9">
-                                                    <select class="form-control" id="group" name="group">
-                                                        <option value=""></option>
-                                                        @foreach(Dict::groups() as $group)
-                                                            <option {{ (old('group') == $group->id) ? "selected" : "" }} value="{{ $group->id }}">{{ $group->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @if ($errors->has('parent_name'))
-                                                        <span class="help-block">
-                                                            <strong>{{ $errors->first('parent_name') }}</strong>
-                                                        </span>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        @endif
                                     </div>
                                     <div class="col-md-6">
                                         <h4 class="card-title">Personal details</h4><br>
                                         <div class="form-group row">
                                             <label class="col-lg-3 col-form-label">Email:</label>
                                             <div class="col-lg-9">
-                                                <input type="email" class="form-control" name="email" required>
+                                                <input type="email" class="form-control" name="email" value="{{ $user->email }}" required>
                                                 @if ($errors->has('email'))
                                                     <span class="help-block">
                                                         <strong>{{ $errors->first('email') }}</strong>
@@ -181,7 +165,7 @@
                                         <div class="form-group row">
                                             <label class="col-lg-3 col-form-label">Пароль:</label>
                                             <div class="col-lg-9">
-                                                <input type="password" class="form-control" name="password" required>
+                                                <input type="password" class="form-control" name="password">
                                                 @if ($errors->has('password'))
                                                     <span class="help-block">
                                                         <strong>{{ $errors->first('password') }}</strong>
@@ -192,7 +176,7 @@
                                         <div class="form-group row">
                                             <label class="col-lg-3 col-form-label">Подтверждение пароля:</label>
                                             <div class="col-lg-9">
-                                                <input type="password" class="form-control" name="password_confirmation" required>
+                                                <input type="password" class="form-control" name="password_confirmation">
                                             </div>
                                         </div>
                                     </div>
@@ -213,7 +197,7 @@
 @section('footer-content')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
-    <script>
+    <script type="text/javascript">
         function onFileSelected(event) {
             var selectedFile = event.target.files[0];
             var reader = new FileReader();

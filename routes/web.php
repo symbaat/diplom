@@ -19,6 +19,7 @@ Route::group([
 
 
     Route::resource('users', 'UsersController');
+    Route::resource('groups', 'GroupsController');
 
 });
 

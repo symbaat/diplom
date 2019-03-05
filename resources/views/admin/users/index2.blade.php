@@ -11,9 +11,14 @@
                     </div>
                     <div class="col-lg-5 col-md-12 col-sm-12 col-12">
                         <ul class="list-inline breadcrumb float-right">
-                            <li class="list-inline-item"><a href="index.html">Home</a></li>
-                            <li class="list-inline-item"><a href="index.html">Students</a></li>
-                            <li class="list-inline-item"> All Students</li>
+                            <li class="list-inline-item"><a href="/admin">Главная</a></li>
+                            <li class="list-inline-item">
+                                @if ($role->id == 2)
+                                    Преподователь
+                                @elseif ($role->id == 3)
+                                    Ученик/Родитель
+                                @endif
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -100,7 +105,9 @@
                                     </div>
                                 </div>
                                 <h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="student-profile.html">{{ $user->name }}</a></h4>
-                                <div class="small text-muted">Group name{{--{{ $user->group->name }}--}}</div>
+                                @if ($role->id == 3)
+                                    <div class="small text-muted">{{ ($user->group_id != null) ? $user->group->name : '' }}</div>
+                                @endif
                             </div>
                         </div>
                     @endforeach
