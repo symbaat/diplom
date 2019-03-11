@@ -146,6 +146,8 @@ div.dataTables_wrapper div.dataTables_paginate {text-align: right;}
 .border-right {border-right: 1px solid #e7e7e7;}
 .blur {-webkit-filter: blur(3px);-moz-filter: blur(3px);-o-filter: blur(3px);-ms-filter: blur(3px);filter: blur(3px);}
 
+
+
 /*------------------------------------------------------------------
 [4. Bootstrap Classes]
 */
@@ -1314,6 +1316,7 @@ blockquote p {font-style: italic;font-weight: 400;}
 /*------------------------------------------------------------------
 [46. Gallery]
 */
+
 
 .lg-backdrop {z-index: 1041;}
 #lightgallery .img-thumbnail {box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);height: 250px;object-fit: cover;}

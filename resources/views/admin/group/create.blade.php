@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('content')
 
     <div class="page-wrapper"> <!-- content -->
@@ -26,7 +27,7 @@
 
                             <div class="card-box">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                                         <h4 class="card-title">Данные группы</h4><br>
                                         <div class="form-group row">
                                             <label class="col-lg-3 col-form-label">Имя:</label>
@@ -41,10 +42,26 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-12">
+                                        <div class="form-group custom-mt-form-group">
+                                            <select>
+                                                <option value="0">Список студентов</option>
+                                                <option value="2">Ruslan</option>
+                                                <option value="3">Symbat</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <button class="btn btn-success">Добавить</button>
+                                    </div>
+                                </div>
                                 <div class="text-right">
                                     <button type="submit" class="btn btn-primary">Отправить</button>
                                 </div>
                             </div>
+
+                          <students-list></students-list>
                         </form>
                     </div>
                 </div>
@@ -73,5 +90,6 @@
         $(document).ready(function() {
             $('input[name="phone_number"]').mask('0 (000) 000 00-00');
         });
+
     </script>
 @endsection
