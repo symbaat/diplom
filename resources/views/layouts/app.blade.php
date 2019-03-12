@@ -6,7 +6,7 @@
     </head>
 
     <body>
-        <div class="main-wrapper">
+        <div id="app" class="main-wrapper">
 
             @include('layouts.header')
 

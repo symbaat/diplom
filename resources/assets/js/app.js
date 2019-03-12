@@ -17,7 +17,6 @@ window.Vue = require('vue');
 
 Vue.component('students-list', require('./components/StudentsList.vue'));
 
-
 const app = new Vue({
     el: '#app'
 });
